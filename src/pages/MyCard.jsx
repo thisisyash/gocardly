@@ -26,7 +26,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { CommonContext } from '../contexts/CommonContext'
 
 
-const styles = {
+let styles = {
   profilePic : {
     width:'30vw',
     height:'30vw',
@@ -46,7 +46,7 @@ const styles = {
   userCard : {
     display:'flex',
     flexDirection:'column',
-    padding:'10px'
+    padding:'3vw'
   },
  
   userNameCont: {
@@ -56,7 +56,6 @@ const styles = {
   },
   aboutMeCont: {
     marginTop:'10px',
-    textAlign:'justify',
     fontSize:'16px'
   },
   addressCont: {
@@ -194,11 +193,15 @@ function MyCard() {
   useEffect(() => {
     getUserData(id).then((response => {
       setUserData(response)
+      Object.keys(response.theme).forEach((prop) => {
+        styles[prop] ={...styles[prop], ...response.theme[prop]}
+      })
       setLoading(false)
     })).catch((error) => {
       
     })
   }, [])
+
 
   function openUrl(url) {
     if (url.slice(0,4) != 'http')

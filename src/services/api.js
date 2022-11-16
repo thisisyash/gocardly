@@ -170,3 +170,62 @@ export const getGlobals = (async(code) => {
   })
 })
 
+export const getThemes = (async(code) => {
+  return new Promise((resolve, reject) => {
+    getDocs(query(collection(db, 'themes'))).then((querySnapshot) => {
+      let themes = []
+      querySnapshot.forEach((doc) => {
+        themes.push(doc.data())      
+      })
+      resolve(themes)
+    }).catch((error)=> {
+      reject(null)
+    })
+  })  
+})
+
+/*===============================================================
+              APIS FOR POSTER MAKER
+===============================================================*/
+
+export const getPosterCategories = (async() => {
+  return new Promise((resolve, reject) => {
+    getDocs(query(collection(db, 'categories'))).then((querySnapshot) => {
+      let categoryItems = []
+      querySnapshot.forEach((doc) => {
+        categoryItems.push(doc.data())      
+      })
+      resolve(categoryItems)
+    }).catch((error)=> {
+      reject(null)
+    })
+  })
+})
+
+export const getEventList = (async(id) => {
+  return new Promise((resolve, reject)=> {
+    getDocs(query(collection(db, `categories/${id}/events`))).then((querySnapshot) => {
+      let eventItems = []
+      querySnapshot.forEach((doc) => {
+        eventItems.push(doc.data())      
+      })
+      resolve(eventItems)
+    }).catch(()=> {
+      reject([])
+    })
+  })
+})
+
+export const getPosters = (async(path) => {
+  return new Promise((resolve, reject) => {
+    getDocs(query(collection(db, path))).then((querySnapshot) => {
+      let posterItems = []
+      querySnapshot.forEach((doc) => {
+        posterItems.push(doc.data())      
+      })
+      resolve(posterItems)
+    }).catch(()=> {
+      reject([])
+    })
+  }) 
+})

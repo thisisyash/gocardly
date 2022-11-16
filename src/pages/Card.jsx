@@ -47,7 +47,7 @@ const styles = {
   userCard : {
     display:'flex',
     flexDirection:'column',
-    padding:'10px'
+    padding:'3vw',
   },
  
   userNameCont: {
@@ -205,6 +205,7 @@ function Card() {
     getUserDataByUrl(id).then((response => {
       setCardExist(true)
       setUserData(response)
+      styles = {...styles,...response.theme}
       setLoading(false)
     })).catch((error) => {
       setCardExist(false)

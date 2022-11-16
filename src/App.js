@@ -26,6 +26,10 @@ import UpdatePayments from './pages/UpdatePayments';
 import MyCard from './pages/MyCard';
 import Themes from './pages/Themes';
 import ChangePassword from './pages/ChangePassword';
+import CategoryList from './pages/CategoryList';
+import EventList from './pages/EventList';
+import PostersList from './pages/PostersList';
+import PosterPreview from './pages/PosterPreview';
 
 function App() {
   return (
@@ -56,6 +60,11 @@ function App() {
               <Route path="/updateSocialMedia" element={<UpdateSocialMedia />}/>
               <Route path="/UpdateProducts" element={<UpdateProducts />}/>
               <Route path="/UpdatePayments" element={<UpdatePayments />}/>  
+
+              <Route path="/posterCategories" element={<CategoryList />}/> 
+              <Route path="/eventList/:id" element={<EventList />}/>
+              <Route path="/postersList/:id" element={<PostersList />}/>
+              <Route path="/posterPreview" element={<PosterPreview />} />
 
             </Route>
 

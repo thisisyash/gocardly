@@ -64,7 +64,7 @@ function AppsPage() {
           </Grid>
 
           <Grid item xs>
-            <Paper style={styles.contentCard}>
+            <Paper style={styles.contentCard} onClick={() => navigate('/themes')}>
               <span style={styles.cardIcon}>
                 <ColorLensIcon fontSize='large' />
               </span>
@@ -76,7 +76,7 @@ function AppsPage() {
           </Grid>
 
           <Grid item xs>
-            <Paper style={styles.contentCard}>
+            <Paper style={styles.contentCard} onClick={() => navigate('/posterCategories')}>
               <span style={styles.cardIcon}>
                 <CollectionsIcon fontSize='large' />
               </span>

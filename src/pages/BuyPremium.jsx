@@ -33,6 +33,7 @@ function BuyPremium() {
   const {getUserId} = useContext(AuthContext)
   const [loading, setLoading] = useState(true)
   const [globalData, setGlobalData] = useState({})
+  const [orderId, setOrderId] = useState(null)
   const navigate = useNavigate()
 
 
@@ -76,13 +77,17 @@ function BuyPremium() {
     })
   }
 
-  async function initiatePayment() {
-
+  const initiateScriptLoad = async() => {
     const resp = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
     if (!resp) {
+      hideLoader()
       showSnackbar("Failed to make payment", "error")
       return
     }
+    makePayment()
+  }
+
+  async function makePayment() {
 
     const paymentSuccess = (response) => {
       console.log("payment success ", response)
@@ -96,8 +101,7 @@ function BuyPremium() {
         isPremium      : true,
         isActive       : true
       }
-
-      showLoader()
+     
       updateUserData(profileData, getUserId()).then(() => {
         hideLoader()
         showAlert("Your premium account is activated successfully")
@@ -106,17 +110,16 @@ function BuyPremium() {
         hideLoader()
         showAlert(getFirebaseError(error.code))
       })
-
     }
 
     var options = {
-      "key": "rzp_test_EWq9NNLZhQGIxA", // Enter the Key ID generated from the Dashboard
+      "key": 'rzp_test_XUrbbzyWzAFKMs', // Enter the Key ID generated from the Dashboard
       "amount": paymentAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
       "currency": "INR",
       "name": "GoCardly Premium",
       "description": "Test Transaction",
       "image": "https://example.com/your_logo",
-      "order_id": "order_KURBUZgDERZgfc", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
       "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
       "prefill": {
           "name": "Gaurav Kumar",
@@ -136,9 +139,31 @@ function BuyPremium() {
       rzp1.open();
       rzp1.on('payment.failed', function (response){
         showAlert("Payment Failed !")
-    }); 
+        hideLoader()
+      }); 
+  }
 
- 
+  async function initiatePayment() {
+
+    showLoader()
+    const orderResp = await fetch("https://gocardly-server.herokuapp.com/createOrder", {
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      "body": JSON.stringify({
+        amount : paymentAmount,
+        currency : "INR",
+        receipt : "GoCardly Payment"
+      })
+    }).then((response) => response.json())
+    .then(function(data) { 
+      /* do stuff with your JSON data */
+      setOrderId(data.id)
+      initiateScriptLoad()
+    })
+    .catch((error) => console.log(error)); 
   }
   return (
     <>

@@ -102,7 +102,8 @@ function Authentication() {
         views        : 0,
         isActive     : false,
         mobileNo     : data.mobileNo,
-        profileCompletion : 5
+        profileCompletion : 5,
+        activeTheme : 'basic'
       }
       userLoggedIn(userData.uid)
 
