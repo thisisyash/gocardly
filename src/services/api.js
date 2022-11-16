@@ -50,11 +50,11 @@ export const getUserDataByUrl = (async(id) => {
       let userData = null
       querySnapshot.forEach((doc) => {
         userData = doc.data()
-      })
       if (userData)
         resolve(userData)
       else  
         reject(null)
+      })
     }).catch((error) => {
       reject(null)
     })

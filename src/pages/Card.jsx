@@ -27,7 +27,7 @@ import { CommonContext } from '../contexts/CommonContext'
 import gocardly from '../assets/gocardly.png'
 
 
-const styles = {
+let styles = {
   profilePic : {
     width:'30vw',
     height:'30vw',
@@ -202,9 +202,11 @@ function Card() {
       setCardExist(false)
       return
     }
+    
     getUserDataByUrl(id).then((response => {
-      setCardExist(true)
+      
       setUserData(response)
+      setCardExist(true)
       styles = {...styles,...response.theme}
       setLoading(false)
     })).catch((error) => {

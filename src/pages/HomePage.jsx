@@ -71,7 +71,7 @@ function HomePage() {
       navigator.share({
         title: 'Gocardly',
         text: 'Check out my digital visiting card created from gocardly.com',
-        url: process.env.REACT_APP_DOMAIN_URL+userData.userUrlId,
+        url: process.env.REACT_APP_DOMAIN_URL+'card/'+userData.userUrlId,
       })
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
