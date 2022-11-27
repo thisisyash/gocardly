@@ -207,7 +207,9 @@ function Card() {
       
       setUserData(response)
       setCardExist(true)
-      styles = {...styles,...response.theme}
+      Object.keys(response.theme).forEach((prop) => {
+        styles[prop] ={...styles[prop], ...response.theme[prop]}
+      })
       setLoading(false)
     })).catch((error) => {
       setCardExist(false)

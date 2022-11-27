@@ -168,7 +168,7 @@ function PosterPreview() {
         </iframe> 
         { 
           imgSrc ?
-            <>
+            <Box p={4}>
               <h2>Image generated successfully !</h2>
               <div style={styles.previewCont}>
                 <img src={imgSrc} style={styles.previewImg} alt="preview image"/>
@@ -177,7 +177,7 @@ function PosterPreview() {
                   Download Image
                 </Button>
               </div>
-            </> : 
+            </Box> : 
             <Box p={4} style={styles.previewCont}> 
               <h3>{loadingTitle}</h3>
             </Box>
