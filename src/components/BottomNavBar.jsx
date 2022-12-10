@@ -7,6 +7,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import { useNavigate } from 'react-router-dom'
 import StyleIcon from '@mui/icons-material/Style';
 import { AuthContext } from '../contexts/AuthContext'
+import GroupsIcon from '@mui/icons-material/Groups';
 
 function BottomNavBar() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -23,7 +24,8 @@ function BottomNavBar() {
             navigate("/")
             break;
           case 1:
-            navigate("/mycard/"+getUserId())
+            navigate("/network")
+            // navigate("/mycard/"+getUserId())
             break;
           case 2:
             navigate("/apps")
@@ -40,7 +42,8 @@ function BottomNavBar() {
       }}
       showLabels>
       <BottomNavigationAction label="Home" icon={<HomeIcon />}/> 
-      <BottomNavigationAction label="Card" icon={<StyleIcon />}/> 
+      {/* <BottomNavigationAction label="Card" icon={<StyleIcon />}/>  */}
+      <BottomNavigationAction label="Network" icon={<GroupsIcon />}/> 
       <BottomNavigationAction label="Apps" icon={<AutoAwesomeMosaicIcon />}/> 
       {/* <BottomNavigationAction label="Share" icon={<ShareIcon />}/>  */}
       <BottomNavigationAction label="Profile" icon={<PersonIcon />}/>

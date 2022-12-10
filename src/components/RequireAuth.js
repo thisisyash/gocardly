@@ -6,7 +6,7 @@ import { AuthContext } from '../contexts/AuthContext'
 
 const styles = {
   outletCont : {
-    height:'87vh',
+    height:'93vh',
     overflowY:'scroll'
   }
 }

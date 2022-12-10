@@ -30,6 +30,9 @@ import CategoryList from './pages/CategoryList';
 import EventList from './pages/EventList';
 import PostersList from './pages/PostersList';
 import PosterPreview from './pages/PosterPreview';
+import Network from './pages/Network';
+import CardScanner from './pages/CardScanner';
+import ContentCreator from './pages/ContentCreator';
 
 function App() {
   return (
@@ -53,6 +56,9 @@ function App() {
               <Route path="/analytics" element={<Analytics />}/>
               <Route path="/enquiries" element={<Enquiries />}/>
               <Route path="/appointments" element={<Appointments />}/>
+              <Route path="/network" element={<Network />}/>  
+              <Route path="/cardScanner" element={<CardScanner />}/>  
+              <Route path="/contentCreator" element={<ContentCreator />}/>  
 
               <Route path="/updatePersonalDetails" element={<UpdatePersonalDetails />}/>
               <Route path="/updateCompanyDetails" element={<UpdateCompanyDetails />}/>

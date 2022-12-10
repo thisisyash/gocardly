@@ -108,7 +108,7 @@ export const uploadImage = (async(fileData, fileMetadata, fileName, path) => {
   const storageRef = ref(storage, `${path}/${fileName}`);
 
   let metadata = {
-    contentType: fileMetadata.type,
+    contentType: fileMetadata?.type,
   };
 
   return new Promise((resolve, reject) => {
@@ -228,4 +228,31 @@ export const getPosters = (async(path) => {
       reject([])
     })
   }) 
+})
+
+export const getNetwork = (async(userId) => {
+  return new Promise((resolve, reject) => {
+    getDocs(query(collection(db, `users/${userId}/contacts`),    
+                                  orderBy('timeStamp', 'desc') )).then((querySnapshot) => {
+      let eventItems = []
+      querySnapshot.forEach((doc) => {
+        eventItems.push(doc.data())      
+      })
+      resolve(eventItems)
+    }).catch(()=> {
+      reject([])
+    })
+  })
+})
+
+export const addContact = (async(data) => {
+  const contCollRef = collection(db, `users/${data.userId}/contacts`)
+  data.contactId = doc(contCollRef).id
+  return new Promise((resolve, reject)=> {
+    setDoc(doc(contCollRef, data.contactId), data).then((querySnapshot) => {
+      resolve({})
+    }).catch((error)=> {
+      reject(error)
+    })
+  })
 })

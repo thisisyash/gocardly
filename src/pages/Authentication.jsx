@@ -103,7 +103,8 @@ function Authentication() {
         isActive     : false,
         mobileNo     : data.mobileNo,
         profileCompletion : 5,
-        activeTheme : 'basic'
+        activeTheme : 'basic',
+        theme : {}
       }
       userLoggedIn(userData.uid)
 

@@ -9,6 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import GroupsIcon from '@mui/icons-material/Groups';
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 
 const styles = {
   contentCard : {
@@ -88,6 +89,18 @@ function AppsPage() {
           </Grid>
 
           <Grid item xs>
+            <Paper style={styles.contentCard} onClick={() => navigate('/contentCreator')}>
+              <span style={styles.cardIcon}>
+                <DriveFileRenameOutlineIcon fontSize='large' />
+              </span>
+                
+              <Button>
+                Content Creator
+              </Button>
+            </Paper>
+          </Grid>
+          
+          {/* <Grid item xs>
             <Paper style={styles.contentCard}>
               <span style={styles.cardIcon}>
                 <ShoppingCartIcon fontSize='large' />
@@ -97,8 +110,8 @@ function AppsPage() {
                 E-commerce
               </Button>
             </Paper>
-          </Grid>
-
+          </Grid> */}
+{/* 
           <Grid item xs>
             <Paper style={styles.contentCard}>
               <span style={styles.cardIcon}>
@@ -109,9 +122,9 @@ function AppsPage() {
                 Chatbot
               </Button>
             </Paper>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs>
+          {/* <Grid item xs>
             <Paper style={styles.contentCard}>
               <span style={styles.cardIcon}>
                 <ViewInArIcon fontSize='large' />
@@ -121,10 +134,10 @@ function AppsPage() {
                 AR/VR
               </Button>
             </Paper>
-          </Grid>
+          </Grid> */}
 
           <Grid item xs>
-            <Paper style={styles.contentCard}>
+            <Paper style={styles.contentCard} onClick={() => navigate('/network')}>
               <span style={styles.cardIcon}>
                 <GroupsIcon fontSize='large' />
               </span>

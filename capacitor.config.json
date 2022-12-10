@@ -1,0 +1,6 @@
+{
+  "appId": "com.brandorigin.businessapp",
+  "appName": "gocardly",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
