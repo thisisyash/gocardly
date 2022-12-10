@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 
 import { Capacitor } from '@capacitor/core'
-import { DocumentScanner } from 'capacitor-document-scanner'
+// import { DocumentScanner } from 'capacitor-document-scanner'
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import Tesseract from 'tesseract.js';
 import { Box } from '@mui/system';
@@ -37,30 +37,30 @@ function CardScanner() {
 
   useEffect(() => {
 
-    async function getDocument() {
-        const { scannedImages } = await DocumentScanner.scanDocument({
-          maxNumDocuments: 1,
-          responseType:'base64'
-        })
+    // async function getDocument() {
+    //     const { scannedImages } = await DocumentScanner.scanDocument({
+    //       maxNumDocuments: 1,
+    //       responseType:'base64'
+    //     })
 
-        showLoader("AI is scanning card. Please wait...")   
+    //     showLoader("AI is scanning card. Please wait...")   
 
-        setScannedImgSrc(_base64ToArrayBuffer(scannedImages))
+    //     setScannedImgSrc(_base64ToArrayBuffer(scannedImages))
 
-        const scannedImage = document.getElementById('scannedImage')
-        scannedImage.src = `data:image/png;base64,${scannedImages}`
-        Tesseract.recognize(
-          _base64ToArrayBuffer(scannedImages),
-          'eng',
-          { logger: m => console.log(m) }
-        ).then(({ data: { text } }) => {
-          setDefContact(getContactDetails(text))
-          setShowForm(true)
-          hideLoader()
-        })
-    }
+    //     const scannedImage = document.getElementById('scannedImage')
+    //     scannedImage.src = `data:image/png;base64,${scannedImages}`
+    //     Tesseract.recognize(
+    //       _base64ToArrayBuffer(scannedImages),
+    //       'eng',
+    //       { logger: m => console.log(m) }
+    //     ).then(({ data: { text } }) => {
+    //       setDefContact(getContactDetails(text))
+    //       setShowForm(true)
+    //       hideLoader()
+    //     })
+    // }
 
-    if (Capacitor.getPlatform != 'web') getDocument()
+    // if (Capacitor.getPlatform != 'web') getDocument()
   }, [])
 
   function extractEmails(text) {
