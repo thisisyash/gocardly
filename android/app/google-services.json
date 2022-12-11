@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812160275286",
+    "project_id": "postermaker-53a0a",
+    "storage_bucket": "postermaker-53a0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812160275286:android:2deddfb9276c3d6d933cf7",
+        "android_client_info": {
+          "package_name": "com.brandorigin.businessapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812160275286-uvjqfg146kobk8umth52sg8resgnkei4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0eqCr_ziJ3UnsOEIgt6PyWdZXBCP8li4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812160275286-uvjqfg146kobk8umth52sg8resgnkei4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

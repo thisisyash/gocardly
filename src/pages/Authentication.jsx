@@ -14,6 +14,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Modal from '@mui/material/Modal';
 import gocardlylogo from '../assets/gocardly.png'
+import {  PushNotifications } from '@capacitor/push-notifications';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -75,6 +76,7 @@ function Authentication() {
     showLoader('Logging In...')
     signInWithEmailAndPassword(auth, data.email, data.password)
     .then((userCredential) => {
+      subscribePushNotification()
       userLoggedIn(userCredential.user.uid)
       hideLoader()
       navigate("/")
@@ -140,8 +142,63 @@ function Authentication() {
     .catch((error) => {
       hideLoader()
       showAlert(getFirebaseError(error.code))
-    });
+    })
   }
+
+  const subscribePushNotification = () => {
+
+    PushNotifications.requestPermissions().then(result => {
+      if (result.receive === 'granted') {
+        PushNotifications.register()
+      } else {
+        // Show some error
+      }
+    })
+
+    PushNotifications.createChannel({id:'alarm', name:'alarm', importance:5,visibility:1, sound:'mysound.mp3'})
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration',
+      (token) => {
+
+        console.log("=================", token.value)
+
+        // setDeviceToken(token.value)
+        // updateUserData({deviceToken : token.value}, userProfile.mobileNo).then(() => {
+        //   setDeviceTokenCookie(token.value)  
+        // }).catch((error) => {
+        //   showAlert("Failed to activate notifications. Please contact admin.")
+        // })
+
+        // if (userProfile.deviceToken && userProfile.deviceToken != token.value) {
+
+        //   unRegisterToken(userProfile.deviceToken, groups).then(async()=> {
+        //     console.log("Removing device from notifications : ", userProfile.deviceToken)
+        //     hideLoader()
+        //   }).catch(async(error) => {
+        //     hideLoader()
+        //     showAlert("Some unexpected error occured")
+        //   })
+        // }
+
+        // registerToken(token.value, groups).then(async()=> {
+        //   console.log("Subscribing device for notifications : ", token.value)
+        //   hideLoader()
+        // }).catch(async(error) => {
+        //   hideLoader()
+        //   showAlert("Some unexpected error occured")
+        // })
+
+      }
+    );
+
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError',
+      (error) => {
+
+      }
+    );
+  }
+
 
   return (
     <div className={classes.whiteBg}>

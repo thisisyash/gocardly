@@ -8,6 +8,7 @@ import gocardlylogo from '../assets/gocardly.png'
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { CommonContext } from '../contexts/CommonContext'
+import { PushNotifications } from '@capacitor/push-notifications';
 
 const styles = {
   contentCard : {
@@ -64,6 +65,13 @@ function HomePage() {
       setUserData(response)
       setLoading(false)
     }))
+
+    PushNotifications.addListener('pushNotificationReceived',
+    (notification) => {
+      console.log("===============Noti Recieved==================")
+    }
+  )
+
   }, [])
 
   function shareCard() {
