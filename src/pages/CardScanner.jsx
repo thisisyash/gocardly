@@ -7,7 +7,6 @@ import Tesseract from 'tesseract.js';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { CommonContext } from '../contexts/CommonContext';
-import { Contacts } from '@capacitor-community/contacts'
 import { addContact, uploadImage } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
