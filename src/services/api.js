@@ -256,3 +256,26 @@ export const addContact = (async(data) => {
     })
   })
 })
+
+
+
+/*===============================================================
+              APIS FOR GOOGLE TOKENS
+===============================================================*/
+
+export const generateRefreshToken = ((data) => {
+  return new Promise((resolve, reject)=> {
+    fetch("http://192.168.43.142:3600/create-tokens", {
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      "body": JSON.stringify(data)
+    }).then((response) => {
+      resolve(response.json())
+    })  
+    .catch((error) => reject(error))
+  })
+})
+

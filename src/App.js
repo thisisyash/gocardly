@@ -33,6 +33,7 @@ import PosterPreview from './pages/PosterPreview';
 import Network from './pages/Network';
 import CardScanner from './pages/CardScanner';
 import ContentCreator from './pages/ContentCreator';
+import AddAppointment from './pages/AddAppointment';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
               <Route path="/analytics" element={<Analytics />}/>
               <Route path="/enquiries" element={<Enquiries />}/>
               <Route path="/appointments" element={<Appointments />}/>
+              <Route path="/addAppointment" element={<AddAppointment />}/>
               <Route path="/network" element={<Network />}/>  
               <Route path="/cardScanner" element={<CardScanner />}/>  
               <Route path="/contentCreator" element={<ContentCreator />}/>  

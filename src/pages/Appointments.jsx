@@ -4,6 +4,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { getAppointments } from '../services/api'
 import { Button, Box, Paper, TextField, Grid} from '@mui/material'
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from 'react-router-dom'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,12 +34,12 @@ function Appointments() {
   const [loading, setLoading] = useState(true)
   const [appointments, setAppointments] = useState({})
   const {getUserId} = useContext(AuthContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
     getAppointments(getUserId()).then((response => {
       setAppointments(response)
       setLoading(false)
-      console.log(response)
     }))
   }, [])
 
@@ -49,6 +50,8 @@ function Appointments() {
       <ComponentLoader /> :
       <Box>
         <h2 className={classes.center}>Appointments</h2>
+        <Button sx={{marginLeft:1}} variant="contained"
+          onClick={() => navigate("/addAppointment")}>Add Appointment</Button>
         {
           appointments.map((appointment, index) => {
             return <Paper key={index} className={classes.apptCont}>

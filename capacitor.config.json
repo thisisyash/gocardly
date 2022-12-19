@@ -2,5 +2,16 @@
   "appId": "com.brandorigin.businessapp",
   "appName": "gocardly",
   "webDir": "build",
-  "bundledWebRuntime": false
+  "bundledWebRuntime": false,
+  "androidClientId":"812160275286-8502plv5r2p45hgeol5j62sm444bgadf.apps.googleusercontent.com",
+  "server": {
+    "hostname":"localhost:3000"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes":["profile", "email", "openid", "https://www.googleapis.com/auth/calendar"],
+      "serverClientId": "812160275286-2elc0v8t31rldlan19vq2h9ik9eidd59.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
 }

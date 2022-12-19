@@ -4,4 +4,5 @@
     <string name="title_activity_main">gocardly</string>
     <string name="package_name">com.brandorigin.businessapp</string>
     <string name="custom_url_scheme">com.brandorigin.businessapp</string>
+    <string name="server_client_id">812160275286-uvjqfg146kobk8umth52sg8resgnkei4.apps.googleusercontent.com</string>
 </resources>
