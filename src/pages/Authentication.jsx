@@ -66,16 +66,28 @@ function Authentication() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(isUserLoggedIn()) {
-      navigate("/", {replace:true})
+
+    async function checkLogin() {
+      console.log("Check login in auth page")
+      const resp = await isUserLoggedIn()
+      console.log("Response from is user login : ", resp)
+      if (resp) {
+        navigate("/", {replace:true})
+      }
     }
+    checkLogin()
+    // if(isUserLoggedIn()) {
+    //   console.log("======I am inside mf====",)
+
+    //   navigate("/", {replace:true})
+    // }
   })
 
   const onLogin = (data) => {
     showLoader('Logging In...')
     signInWithEmailAndPassword(auth, data.email, data.password)
-    .then((userCredential) => {
-      userLoggedIn(userCredential.user.uid)
+    .then(async(userCredential) => {
+      await userLoggedIn(userCredential.user.uid)
       hideLoader()
       navigate("/")
     })
