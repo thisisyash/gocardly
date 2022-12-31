@@ -22,9 +22,7 @@ function RequireAuth({props}) {
   useEffect(() => {
     showLoader()
     async function checkLogin() {
-      console.log("Check login in require auth")
       const resp = await isUserLoggedIn()
-      console.log("Response from is user login : ", resp)
       setLogin(resp)
       setLoading(false)
       hideLoader()
@@ -32,7 +30,6 @@ function RequireAuth({props}) {
     checkLogin()
   }, [login])
 
-  console.log("===Require Auth===", login)
   return (
     <>
       {
