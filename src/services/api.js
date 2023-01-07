@@ -27,7 +27,7 @@ export const getUserData = (async(id) => {
     // console.log("Returning cache data")
     return userDataCache
   }
-  
+
   return new Promise((resolve, reject)=> {
     getDoc(doc(db, `users/${id}`)).then((querySnapshot) => {
       resolve(querySnapshot.data())
@@ -279,3 +279,44 @@ export const generateRefreshToken = ((data) => {
   })
 })
 
+/*===============================================================
+               APIS FOR MEETING
+===============================================================*/
+
+export const createMeeting = ((data) => {
+  return new Promise((resolve, reject)=> {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/createMeeting`, {
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      "body": JSON.stringify(data)
+    }).then((response) => {
+      resolve(response.json())
+    })  
+    .catch((error) => reject(error))
+  })
+})
+
+/*===============================================================
+               APIS FOR LANDING
+===============================================================*/
+
+export const getLanding = ((params) => {
+  return new Promise((resolve, reject)=> {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/getLanding`, {
+      "method": "POST",
+      "headers": {
+        "content-type": "application/json",
+        "accept": "application/json"
+      },
+      "body": JSON.stringify({params : params})
+    }).then(async(response) => {
+      const resp = await response.json()
+      if (resp.error) reject(resp)
+      else resolve(resp)
+    })  
+    .catch((error) => reject(error))
+  })
+})

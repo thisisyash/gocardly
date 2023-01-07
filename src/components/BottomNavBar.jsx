@@ -8,14 +8,20 @@ import { useNavigate } from 'react-router-dom'
 import StyleIcon from '@mui/icons-material/Style';
 import { AuthContext } from '../contexts/AuthContext'
 import GroupsIcon from '@mui/icons-material/Groups';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { CommonContext } from '../contexts/CommonContext';
+import Paper from '@mui/material/Paper';
+
 
 function BottomNavBar() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const {showAlert} = useContext(CommonContext)
   const {getUserId} = useContext(AuthContext)
 
   const navigate    = useNavigate()
   return (
-    <BottomNavigation sx={{width:'100%', position:'absolute', bottom:0, height:'7vh'}}
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, height:'7vh' }} elevation={3}>
+    <BottomNavigation
       value={activeIndex}
       onChange={(event, newIndex) => {
         setActiveIndex(newIndex)
@@ -28,12 +34,15 @@ function BottomNavBar() {
             // navigate("/mycard/"+getUserId())
             break;
           case 2:
+            showAlert("Hello")
+            break;
+          case 3:
             navigate("/apps")
             break;
           // case 3:
           //   console.log("Share")
           //   break;
-          case 3:
+          case 4:
             navigate("/profile")
             break;
           default:
@@ -44,10 +53,12 @@ function BottomNavBar() {
       <BottomNavigationAction label="Home" icon={<HomeIcon />}/> 
       {/* <BottomNavigationAction label="Card" icon={<StyleIcon />}/>  */}
       <BottomNavigationAction label="Network" icon={<GroupsIcon />}/> 
+      <BottomNavigationAction label="Add" icon={<AddCircleOutlineIcon />} />
       <BottomNavigationAction label="Apps" icon={<AutoAwesomeMosaicIcon />}/> 
       {/* <BottomNavigationAction label="Share" icon={<ShareIcon />}/>  */}
       <BottomNavigationAction label="Profile" icon={<PersonIcon />}/>
     </BottomNavigation>
+    </Paper>
   )
 }
 

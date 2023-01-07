@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react'
 import { Button, Box, Card, Paper, Grid } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { getUserData } from '../services/api'
+import { getLanding, getUserData } from '../services/api'
 import { AuthContext } from '../contexts/AuthContext'
 import ComponentLoader from '../components/ComponentLoader'
 import gocardlylogo from '../assets/gocardly.png'
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { CommonContext } from '../contexts/CommonContext'
+import ActionItem from '../components/ActionItem'
 
 const styles = {
   contentCard : {
@@ -30,7 +31,7 @@ const styles = {
   },
 
   countText: {
-    fontSize:40,
+    fontSize:30,
     textAlign:'center',
     fontWeight:'bold'
   },
@@ -47,7 +48,14 @@ const styles = {
     display:'flex',
     alignItems:'center',
     justifyContent:'center'
+  },
+  anCont : {
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'space-between',
+    width:'100%'
   }
+
 }
 
 function HomePage() {
@@ -57,14 +65,28 @@ function HomePage() {
   const {getUserId} = useContext(AuthContext)
   const [loading, setLoading] = useState(true)
   const { showLoader, hideLoader, showAlert, showSnackbar } = useContext(CommonContext)
-
+  const [actionData, setActionData] = useState({})
 
   useEffect(() => {
-    getUserData(getUserId()).then((response => {
-      setUserData(response)
+    const params = {
+      uid       : getUserId(),
+      timeStamp : Date.now()
+    }
+    getLanding(params).then((response => {
+      setUserData(response.userData)
+      
+      if (response.actionData.length)
+        setActionData(sortActionData(response.actionData))
       setLoading(false)
-    }))
+    })).catch((error) => {
+      showAlert(error.error)
+    })
   }, [])
+
+  function sortActionData(actionItems) {
+    actionItems.sort((a, b) => parseFloat(a.fromTs) - parseFloat(b.fromTs));
+    return actionItems
+  }
 
   function shareCard() {
     if (navigator.share) {
@@ -76,12 +98,11 @@ function HomePage() {
         .then(() => console.log('Successful share'))
         .catch((error) => console.log('Error sharing', error));
     } else {
-      var text = "Example text to appear on clipboard";
-      navigator.clipboard.writeText(text).then(function() {
+      navigator.clipboard.writeText(process.env.REACT_APP_DOMAIN_URL+'card/'+userData.userUrlId).then(function() {
         showSnackbar("Card url copied to clipboard")
       }, function(err) {
         showSnackbar("Card url copied to clipboard")
-      });
+      })
     }
   }
 
@@ -99,7 +120,35 @@ function HomePage() {
             <span>
               Welcome, {userData.userName}
             </span>
-            <span>
+            <Box style={styles.anCont}>
+              <Box onClick={() => navigate('/analytics')}>
+                <Box style={styles.countText}>
+                  {userData.views || 0}
+                </Box>
+                <Box>
+                  Card Views
+                </Box>
+              </Box>
+
+              <Box onClick={() => navigate('/enquiries')}>
+                <Box style={styles.countText}>
+                  {userData.enquiriesCount || 0}
+                </Box>
+                <Box>
+                  Enquiries
+                </Box>
+              </Box>
+
+              <Box onClick={() => navigate('/appointments')}>
+                <Box style={styles.countText}>
+                  {userData.appointmentsCount || 0}
+                </Box>
+                <Box>
+                  Appointments
+                </Box>
+              </Box>
+            </Box>
+            {/* <span>
               Profile completion status : {userData.profileCompletion || 0}%
             </span>
             <div>
@@ -109,10 +158,31 @@ function HomePage() {
               <Button variant="outlined" color="primary" sx={{marginLeft:2}} onClick={() => navigate("/mycard/"+getUserId())}>
                 View Card
               </Button>
-            </div>
+            </div> */}
           </Paper>
         </Box>
 
+        <Box>
+          <p>Today's Events</p>
+          {
+            actionData.length ? 
+            <Box>
+              {
+                actionData.map((event, index) => {
+                  return(
+                    <ActionItem {...event} {...{index : index}} key={index} />
+                  )
+                })
+              }
+            </Box>
+            :
+            <Box>
+              No Events Today
+            </Box>
+          }
+        </Box>
+
+{/* 
         <Grid container spacing={3} justifyContent="center">
 
           <Grid item xs>
@@ -179,10 +249,15 @@ function HomePage() {
             </Paper>
           </Grid>
 
-        </Grid>
-        <Box style={styles.center} pt={2}>
+        </Grid> */}
+        {/* <Box style={styles.center} pt={2}>
           <Button sx={{height:'40px'}} variant='contained' onClick={shareCard}>
             Share My Card
+          </Button>
+        </Box> */}
+        <Box style={styles.center} pt={2}>
+          <Button sx={{height:'40px'}} variant='contained' onClick={shareCard}>
+            View Next Day Events
           </Button>
         </Box>
       </Box>

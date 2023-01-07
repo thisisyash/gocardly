@@ -192,10 +192,10 @@ function Card() {
   const { id } = useParams()
   const { showLoader, hideLoader, showAlert, showSnackbar } = useContext(CommonContext)
   const [appointmentModal, setAppointmentModal] = React.useState(false);
-  const [enquiryModal, setEnquiryModal] = React.useState(false)
+  const [enquiryModal, setEnquiryModal] = useState(false)
   const [cardExist, setCardExist] = useState(false)
 
-  const [dateTime, setDateTime] = React.useState(null);
+  const [dateTime, setDateTime] = useState(null)
 
   useEffect(() => {
     if (!id) {
@@ -328,6 +328,7 @@ function Card() {
                     renderInput={(props) => <TextField sx={{width:'100%'}} {...props} />}
                     label="Select Date and Time"
                     value={dateTime}
+                    inputFormat="DD/MM/YYYY hh:mm A"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="end">

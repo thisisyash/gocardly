@@ -1,7 +1,6 @@
 import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
-import { generateRefreshToken } from '../services/api';
+import { createMeeting, generateRefreshToken } from '../services/api';
 import React,  {useContext, useEffect, useState} from 'react'
-import { TextField, Button, Box, Card, Paper, Grid } from '@mui/material'
 import { AuthContext } from '../contexts/AuthContext';
 import { CommonContext } from '../contexts/CommonContext';
 import { useForm, Controller } from "react-hook-form";
@@ -14,6 +13,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { TextField, Button, Box, Paper , FormControl, InputLabel, MenuItem, Select, Modal } from '@mui/material'
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,12 +50,16 @@ const useStyles = makeStyles((theme) => ({
 function AddAppointment() {
 
   const classes = useStyles()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const { register, handleSubmit, control, reset, formState : {errors} } = useForm()
   const {getUserId} = useContext(AuthContext)
   const { showLoader, hideLoader, showAlert, showSnackbar } = useContext(CommonContext)
-  const [dateTime, setDateTime] = React.useState(null);
-  const [type, setType] = React.useState('online');
+  const [dateTime, setDateTime] = useState(null)
+  const [type, setType] = useState('Online')
+  const [meetLink, setMeetLink] = useState(true)
+  const [duration, setDuration] = useState('30')
+  const [showError, setShowError] = useState(false)
 
 
   useEffect(() => {
@@ -62,18 +70,29 @@ function AddAppointment() {
         grantOfflineAccess: true
       });
     }, 1000)
-
   }, [])
 
   function onFormSubmit(data) {
+    
+    if (dateTime && dateTime.$d) data.fromTs = dateTime.$d.getTime()
+    data.meetingType = type
+    data.meetLinkRequired = meetLink
+    data.duration = duration
+    data.uid = getUserId()
+    if (!data.fromTs) {
+      setShowError(true)
+      return
+    }
+    
     showLoader()
-    // updateUserData(data, getUserId()).then(async()=> {
-    //   hideLoader()
-    //   showSnackbar('Profile data updated successfully !')
-    // }).catch(async() => {
-    //   hideLoader()
-    //   showSnackbar('Failed to update profile data', 'error')
-    // })
+    createMeeting(data).then(async()=> {
+      hideLoader()
+      showSnackbar('Meeting created successfully !')
+      navigate("/")
+    }).catch(async() => {
+      hideLoader()
+      showSnackbar('Failed to create meeting', 'error')
+    })
   }
 
   const signIn = async() => {
@@ -129,6 +148,7 @@ function AddAppointment() {
                 <DateTimePicker
                   renderInput={(props) => <TextField sx={{width:'100%'}} {...props} />}
                   label="Select Date and Time"
+                  inputFormat="DD/MM/YYYY hh:mm A"
                   value={dateTime}
                   InputProps={{
                     startAdornment: (
@@ -136,28 +156,77 @@ function AddAppointment() {
                         <InsertInvitationIcon />
                       </InputAdornment>
                     ),
+                    error:showError
                   }}
-                  minDateTime={dayjs(Date.now())}
+                  
                   onChange={(newValue) => {
-                    setDateTime(newValue);
+                    setDateTime(newValue)
+                    setShowError(false)
                   }}
                 />
               </LocalizationProvider>
+              <Box sx={{color:'#d32f2f', fontSize:'0.80rem', marginTop:'3px', marginLeft:'14px'}}>
+                {
+                  showError ? 'Please select date and time' : ''
+                }
+              </Box>
             </Box>
 
             <Box mb={3}>
-            <ToggleButtonGroup
-              color="primary"
-              value={type}
-              exclusive
-              onChange={(event, newType) => setType(newType)}
-              aria-label="Platform"
-            >
-              <ToggleButton value="online">Online</ToggleButton>
-              <ToggleButton value="offline">Offline</ToggleButton>
-            </ToggleButtonGroup>
+              <FormControl 
+                sx={{margin:'10px 0', width:'50vw'}}>  
+                <InputLabel id="demo-select-small">Duration</InputLabel>
+                  <Select
+                    value={duration}
+                    labelId="demo-select-small"
+                    placeholder="Duration"
+                    required
+                    onChange={(e) => setDuration(e.target.value)}
+                    label="Duration">
+                    <MenuItem value={'15'}>15 Mins</MenuItem>
+                    <MenuItem value={'30'}>30 Mins</MenuItem>
+                    <MenuItem value={'45'}>45 Mins</MenuItem>
+                    <MenuItem value={'60'}>1 Hour</MenuItem>
+                    <MenuItem value={'120'}>2 Hours</MenuItem>
+                  </Select>
+                </FormControl>
             </Box>
-          <Button type="submit" variant="contained" color="primary" fullWidth sx={{marginBottom:'25px'}}>
+
+            <Box mb={3}>
+              <ToggleButtonGroup
+                color="primary"
+                value={type}
+                exclusive
+                onChange={(event, newType) => setType(newType)}
+                aria-label="Platform"
+              >
+                <ToggleButton value="Online">Online</ToggleButton>
+                <ToggleButton value="Offline">Offline</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
+            {
+              type === 'Online' ? 
+              <Box>
+                <FormGroup>
+                  <FormControlLabel control={
+                    <Checkbox defaultChecked onChange={(e) => setMeetLink(e.target.checked)}/>
+                    } label="Create Meeting Link" />
+                </FormGroup>
+              </Box> :
+              <Box>
+                <TextField
+                  placeholder="Enter location"
+                  label="Meeting Location"
+                  variant="outlined"
+                  fullWidth
+                  name="location"
+                  {...register("location")}
+                  error={Boolean(errors?.location)}
+                  helperText={errors?.location?.message}
+                />
+              </Box>
+            }
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{marginBottom:'25px', marginTop:'25px'}}>
             Save 
           </Button>
         </form>
