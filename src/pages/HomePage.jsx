@@ -73,12 +73,14 @@ function HomePage() {
       timeStamp : Date.now()
     }
     getLanding(params).then((response => {
+
       setUserData(response.userData)
       
       if (response.actionData.length)
         setActionData(sortActionData(response.actionData))
       setLoading(false)
     })).catch((error) => {
+      console.log(error)
       showAlert(error.error)
     })
   }, [])

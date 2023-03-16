@@ -11,11 +11,13 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { CommonContext } from '../contexts/CommonContext';
 import Paper from '@mui/material/Paper';
+import { Box} from '@mui/material'
+import Activities from './Activities';
 
 
 function BottomNavBar() {
   const [activeIndex, setActiveIndex] = useState(0)
-  const {showAlert} = useContext(CommonContext)
+  const {showPopup} = useContext(CommonContext)
   const {getUserId} = useContext(AuthContext)
 
   const navigate    = useNavigate()
@@ -34,7 +36,7 @@ function BottomNavBar() {
             // navigate("/mycard/"+getUserId())
             break;
           case 2:
-            showAlert("Hello")
+            showPopup(<Activities />)
             break;
           case 3:
             navigate("/apps")
@@ -53,7 +55,7 @@ function BottomNavBar() {
       <BottomNavigationAction label="Home" icon={<HomeIcon />}/> 
       {/* <BottomNavigationAction label="Card" icon={<StyleIcon />}/>  */}
       <BottomNavigationAction label="Network" icon={<GroupsIcon />}/> 
-      <BottomNavigationAction label="Add" icon={<AddCircleOutlineIcon />} />
+      <BottomNavigationAction label="New" icon={<AddCircleOutlineIcon />} />
       <BottomNavigationAction label="Apps" icon={<AutoAwesomeMosaicIcon />}/> 
       {/* <BottomNavigationAction label="Share" icon={<ShareIcon />}/>  */}
       <BottomNavigationAction label="Profile" icon={<PersonIcon />}/>

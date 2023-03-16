@@ -17,7 +17,6 @@ const styles = {
 }
 
 function ActionItem(props) {
-  console.log("====", props)
   
   const openMeetLink = (meetLink) => {
     window.open(meetLink, '_blank')

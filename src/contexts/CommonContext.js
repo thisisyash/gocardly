@@ -7,6 +7,9 @@ export const CommonProvider = (props) => {
   const [alert, setAlert] = useState(false)
   const [alertText, setAlertText] = useState('')
 
+  const [popup, setPopup] = useState(false)
+  const [popupComp, setPopupComp] = useState(null)
+
   const [loader, setLoader] = useState(false)
   const [loadingText, setLoadingText] = useState('Loading...')
 
@@ -33,6 +36,16 @@ export const CommonProvider = (props) => {
     setAlertText(null)
   }
 
+  const showPopup = (alertComp) => {
+    setPopupComp(alertComp)
+    setPopup(true)
+  }
+
+  const hidePopup = () => {
+    setPopup(false)
+    setPopupComp(null)
+  }
+
   const showSnackbar = (snackbarText, type) => {
     setSnackbarText(snackbarText)
     setSnackbarType(type)
@@ -51,10 +64,16 @@ export const CommonProvider = (props) => {
     showAlert,
     hideAlert,
     setAlert,
+    showPopup,
+    hidePopup,
+    setPopup,
+    popupComp,
+    setPopupComp,
     loader,
     loadingText,
     alert,
     alertText,
+    popup,
     snackbar,
     snackbarText,
     showSnackbar,

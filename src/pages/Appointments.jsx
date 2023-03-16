@@ -50,8 +50,6 @@ function Appointments() {
       <ComponentLoader /> :
       <Box>
         <h2 className={classes.center}>Appointments</h2>
-        <Button sx={{marginLeft:1}} variant="contained"
-          onClick={() => navigate("/addAppointment")}>Add Appointment</Button>
         {
           appointments.map((appointment, index) => {
             return <Paper key={index} className={classes.apptCont}>

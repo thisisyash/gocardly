@@ -34,6 +34,7 @@ import Network from './pages/Network';
 import CardScanner from './pages/CardScanner';
 import ContentCreator from './pages/ContentCreator';
 import AddAppointment from './pages/AddAppointment';
+import Popup from './components/Popup';
 
 function App() {
   return (
@@ -43,40 +44,42 @@ function App() {
       <Routes>
         <Route element={<FullPageLoader />} >
           <Route element={<AlertBox />} >
-            <Route path="/auth" element={<Authentication />}/>
+            <Route element={<Popup />} >
 
-            <Route element={<RequireAuth />} >
-              <Route path="/" element={<HomePage />}/>
-              <Route path="/mycard/:id" element={<MyCard />}/>
-              <Route path="/profile" element={<Profile />}/>
-              <Route path="/apps" element={<AppsPage />}/>
-              <Route path="/themes" element={<Themes />}/>
-              <Route path="/changePassword" element={<ChangePassword />}/>
+                <Route path="/auth" element={<Authentication />}/>
+                <Route path="/card/:id" element={<Card />}/>  
+                <Route element={<RequireAuth />} >
+                  <Route path="/" element={<HomePage />}/>
+                  <Route path="/mycard/:id" element={<MyCard />}/>
+                  <Route path="/profile" element={<Profile />}/>
+                  <Route path="/apps" element={<AppsPage />}/>
+                  <Route path="/themes" element={<Themes />}/>
+                  <Route path="/changePassword" element={<ChangePassword />}/>
 
-              <Route path="/buy-premium" element={<BuyPremium />}/>
-              <Route path="/analytics" element={<Analytics />}/>
-              <Route path="/enquiries" element={<Enquiries />}/>
-              <Route path="/appointments" element={<Appointments />}/>
-              <Route path="/addAppointment" element={<AddAppointment />}/>
-              <Route path="/network" element={<Network />}/>  
-              <Route path="/cardScanner" element={<CardScanner />}/>  
-              <Route path="/contentCreator" element={<ContentCreator />}/>  
+                  <Route path="/buy-premium" element={<BuyPremium />}/>
+                  <Route path="/analytics" element={<Analytics />}/>
+                  <Route path="/enquiries" element={<Enquiries />}/>
+                  <Route path="/appointments" element={<Appointments />}/>
+                  <Route path="/addAppointment" element={<AddAppointment />}/>
+                  <Route path="/network" element={<Network />}/>  
+                  <Route path="/cardScanner" element={<CardScanner />}/>  
+                  <Route path="/contentCreator" element={<ContentCreator />}/>  
 
-              <Route path="/updatePersonalDetails" element={<UpdatePersonalDetails />}/>
-              <Route path="/updateCompanyDetails" element={<UpdateCompanyDetails />}/>
-              <Route path="/updateGallery" element={<UpdateGallery />}/>
-              <Route path="/updateSocialMedia" element={<UpdateSocialMedia />}/>
-              <Route path="/UpdateProducts" element={<UpdateProducts />}/>
-              <Route path="/UpdatePayments" element={<UpdatePayments />}/>  
+                  <Route path="/updatePersonalDetails" element={<UpdatePersonalDetails />}/>
+                  <Route path="/updateCompanyDetails" element={<UpdateCompanyDetails />}/>
+                  <Route path="/updateGallery" element={<UpdateGallery />}/>
+                  <Route path="/updateSocialMedia" element={<UpdateSocialMedia />}/>
+                  <Route path="/UpdateProducts" element={<UpdateProducts />}/>
+                  <Route path="/UpdatePayments" element={<UpdatePayments />}/>  
 
-              <Route path="/posterCategories" element={<CategoryList />}/> 
-              <Route path="/eventList/:id" element={<EventList />}/>
-              <Route path="/postersList/:id" element={<PostersList />}/>
-              <Route path="/posterPreview" element={<PosterPreview />} />
+                  <Route path="/posterCategories" element={<CategoryList />}/> 
+                  <Route path="/eventList/:id" element={<EventList />}/>
+                  <Route path="/postersList/:id" element={<PostersList />}/>
+                  <Route path="/posterPreview" element={<PosterPreview />} />
 
+                </Route>
+                      
             </Route>
-
-            <Route path="/card/:id" element={<Card />}/>            
           </Route>
         </Route>
       </Routes>
