@@ -93,8 +93,8 @@ function HomePage() {
   function shareCard() {
     if (navigator.share) {
       navigator.share({
-        title: 'Gocardly',
-        text: 'Check out my digital visiting card created from gocardly.com',
+        title: 'Tykoon',
+        text: 'Check out my digital visiting card created from Tykoon.io',
         url: process.env.REACT_APP_DOMAIN_URL+'card/'+userData.userUrlId,
       })
         .then(() => console.log('Successful share'))
@@ -259,7 +259,7 @@ function HomePage() {
         </Box> */}
         <Box style={styles.center} pt={2}>
           <Button sx={{height:'40px'}} variant='contained' onClick={shareCard}>
-            View Next Day Events
+            Share Card
           </Button>
         </Box>
       </Box>

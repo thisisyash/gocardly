@@ -207,11 +207,11 @@ function AddAppointment() {
             {
               type === 'Online' ? 
               <Box>
-                <FormGroup>
+                {/* <FormGroup>
                   <FormControlLabel control={
                     <Checkbox defaultChecked onChange={(e) => setMeetLink(e.target.checked)}/>
                     } label="Create Meeting Link" />
-                </FormGroup>
+                </FormGroup> */}
               </Box> :
               <Box>
                 <TextField
@@ -231,9 +231,9 @@ function AddAppointment() {
           </Button>
         </form>
       </Box>
-        <Button onClick={signIn}>
+        {/* <Button onClick={signIn}>
           SignIn
-        </Button>
+        </Button> */}
     </>
   )
 }
